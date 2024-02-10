@@ -6,6 +6,7 @@ export const getAllArticles = async (): Promise<Article[]> => {
   if (!res.ok) {
     throw new Error("error!");
   }
+
   const articles = await res.json();
   return articles;
 };
