@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import { Article } from "./types";
 
 export const getAllArticles = async (): Promise<Article[]> => {
@@ -9,4 +10,21 @@ export const getAllArticles = async (): Promise<Article[]> => {
 
   const articles = await res.json();
   return articles;
+};
+
+export const getDatailArticle = async (id: string): Promise<Article> => {
+  const res = await fetch(`http://localhost:3001/posts/${id}`, {
+    next: { revalidate: 60 },
+  }); // ISR 1分間キャッシュ
+
+  if (res.status === 404) {
+    notFound();
+  }
+
+  if (!res.ok) {
+    throw new Error("error!");
+  }
+
+  const article = await res.json();
+  return article;
 };

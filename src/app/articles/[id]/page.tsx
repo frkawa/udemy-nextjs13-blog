@@ -1,7 +1,10 @@
+import { getDatailArticle } from "@/blogAPI";
 import Image from "next/image";
 import React from "react";
 
-const Article = ({ params }: { params: { id: string } }) => {
+const Article = async ({ params }: { params: { id: string } }) => {
+  const detailArticle = await getDatailArticle(params.id);
+
   return (
     <div className="max-w-3xl mx-auto p-5">
       <Image
@@ -10,9 +13,9 @@ const Article = ({ params }: { params: { id: string } }) => {
         width={1280}
         height={300}
       />
-      <h1 className="text-4xl text-center my-10">Next.js13の勉強中です</h1>
+      <h1 className="text-4xl text-center my-10">{detailArticle.title}</h1>
       <div className="text-lg leading-relaxed text-justify">
-        <p>ここが本文</p>
+        <p>{detailArticle.content}</p>
       </div>
     </div>
   );
