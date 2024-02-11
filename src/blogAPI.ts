@@ -8,6 +8,8 @@ export const getAllArticles = async (): Promise<Article[]> => {
     throw new Error("error!");
   }
 
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
   const articles = await res.json();
   return articles;
 };
@@ -24,6 +26,33 @@ export const getDatailArticle = async (id: string): Promise<Article> => {
   if (!res.ok) {
     throw new Error("error!");
   }
+
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  const article = await res.json();
+  return article;
+};
+
+export const createArticle = async (
+  id: string,
+  title: string,
+  content: string
+): Promise<Article> => {
+  const currentDateTime = new Date().toISOString();
+
+  const res = await fetch("http://localhost:3001/posts/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ id, title, content, currentDateTime }),
+  });
+
+  if (!res.ok) {
+    throw new Error("error!");
+  }
+
+  await new Promise((resolve) => setTimeout(resolve, 1000));
 
   const article = await res.json();
   return article;
